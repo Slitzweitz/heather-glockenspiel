@@ -45,6 +45,7 @@ var uri = 'mongodb://'+process.env.USER+':'+process.env.PASS+'@'+process.env.HOS
 
 mongodb.MongoClient.connect(uri, function(err, db) {
   if(err) throw err;
+  dbSongs+="<h1>MongoDB Example</h1>";
   dbSongs+="Connecting to db "+process.env.DB+"<br />";
   
   /*
@@ -98,7 +99,7 @@ mongodb.MongoClient.connect(uri, function(err, db) {
             // Only close the connection when your app is terminating.
             db.close(function (err) {
               dbSongs+="Closing db " + process.env.DB;
-              dbSongs+="<br><br><br><hr><p><a href=\"https://gomix.com/#!/remix/mongodb/f7a5a47d-b266-4a86-b13d-09a1d2aaea2b\"><img src=\"https://gomix.com/images/background-light/remix-on-gomix.svg\"></a></p><p><a href=\"https://gomix.com/#!/project/mongodb\">View Code</a></p>";
+              dbSongs+="<footer id=\"gWidget\"></footer><script src=\"https://widget.gomix.me/widget.min.js\"></script>";
               if(err) throw err;
             });
           });
@@ -113,6 +114,6 @@ app.get("/", function (request, response) {
 });
 
 // listen for requests :)
-listener = app.listen("3000", function () {
+var listener = app.listen("3000", function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
