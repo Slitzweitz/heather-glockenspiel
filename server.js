@@ -99,7 +99,7 @@ mongodb.MongoClient.connect(uri, function(err, db) {
             // Only close the connection when your app is terminating.
             db.close(function (err) {
               dbSongs+="Closing db " + process.env.DB;
-              dbSongs+="<footer id=\"gWidget\"></footer><script src=\"https://widget.glitch.me/widget.min.js\"></script>";
+              dbSongs+="<script src=\"https://button.glitch.me/button.js\" data-style=\"glitch\"></script><div class=\"glitchButton\" style=\"position:fixed;top:20px;right:20px;\"></div>";
               if(err) throw err;
             });
           });
