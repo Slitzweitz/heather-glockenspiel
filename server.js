@@ -17,9 +17,12 @@ var app = express();
 
 const GoogleImages = require('google-images');
  
-const client = new GoogleImages('CSE ID', 'API KEY');
+const client = new GoogleImages(process.env.CSEID, process.env.APIKEY);
  
-var newSearch = client.search(req.params[0])
+app.use(express.static('public'));
+
+app.get("/:imgsrch/:offset", function (req, res) {
+  var newSearch = client.search(req.imgsrch)
     .then(images => {
         /*
         [{
@@ -36,14 +39,9 @@ var newSearch = client.search(req.params[0])
         }]
          */
     });
- 
-// paginate results 
-client.search('Steve Angello', {page: 2});
-
-app.use(express.static('public'));
-
-app.get("/", function (req, res) {
-  res.send();
+  // paginate results 
+  client.search('Steve Angello', {page: 2});
+  res.send(newSearch);
 });
 
 // listen for requests :)
