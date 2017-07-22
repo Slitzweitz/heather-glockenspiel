@@ -26,7 +26,15 @@ const client = new GoogleImages('006396959488029172989:gcybejxuaka', process.env
 
 var Schema = mongoose.Schema;
 
-var imgSchema = new Schema({})
+var imgSchema = new Schema({
+  searchTerm  :  {
+    type: String,
+    min: [1, 'spec']
+  },
+  altText     : String,
+  pageUrl     : String,
+  
+});
  
 app.use(express.static('public'));
 
