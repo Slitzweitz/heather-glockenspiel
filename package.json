@@ -1,23 +1,24 @@
 {
-	"name": "mongodb",
-	"version": "0.0.1",
-	"description": "Example app interacting with MongoDB",
-	"main": "server.js",
-	"scripts": {
-		"start": "node server.js"
-	},
-	"dependencies": {
-		"express": "^4.12.4",
-		"mongodb": "*"
-	},
-	"engines": {
-		"node": "4.4.5"
-	},
-	"keywords": [
-		"node",
-		"express",
-		"mongodb",
-		"database"
-	],
-	"license": "MIT"
+  "name": "mongodb",
+  "version": "0.0.1",
+  "description": "Example app interacting with MongoDB",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.12.4",
+    "google-images": "^2.1.0",
+    "mongodb": "*"
+  },
+  "engines": {
+    "node": "4.4.5"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "mongodb",
+    "database"
+  ],
+  "license": "MIT"
 }
