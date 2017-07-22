@@ -13,23 +13,33 @@
 // init project
 var express = require('express');
 var mongo = require('mongodb').MongoClient;
+var mongoose = require('mongoose');
 var app = express();
 
 // Standard URI format: mongodb://[dbuser:dbpassword@]host:port/dbname
 
-var uri = 'mongodb://user:pass@host:port/db';
+var uri = process.env.MONGODB_URI;
 
 const GoogleImages = require('google-images');
  
 const client = new GoogleImages('006396959488029172989:gcybejxuaka', process.env.APIKEY);
+
+var Schema = mongoose.Schema;
+
+var imgSchema = new Schema({})
  
 app.use(express.static('public'));
 
 app.get("/:imgsrch/:offset", function (req, res) {
+  
   console.log(req.imgsrch, req.offset, req.params)
-  mongo.connect(uri, function(err, db) {
-    db.close();
-  });
+  
+  mongoose.connect(uri);
+  
+  var db = mongoose.connection;
+  
+  db.on('error', console.error.bind(console, 'MongoDB connection error'));
+  
   var newSearch = client.search(req.imgsrch)
     .then(images => {
         /*

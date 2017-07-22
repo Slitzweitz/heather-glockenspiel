@@ -9,7 +9,8 @@
   "dependencies": {
     "express": "^4.12.4",
     "google-images": "^2.1.0",
-    "mongodb": "*"
+    "mongodb": "*",
+    "mongoose": "^4.11.3"
   },
   "engines": {
     "node": "4.4.5"
