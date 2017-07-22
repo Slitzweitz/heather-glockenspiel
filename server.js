@@ -18,27 +18,6 @@ var dbSongs="";
 
 app.use(express.static('public'));
 
-// Create seed data
-var seedData = [
-  {
-    decade: '1970s',
-    artist: 'Debby Boone',
-    song: 'You Light Up My Life',
-    weeksAtOne: 10
-  },
-  {
-    decade: '1980s',
-    artist: 'Olivia Newton-John',
-    song: 'Physical',
-    weeksAtOne: 10
-  },
-  {
-    decade: '1990s',
-    artist: 'Mariah Carey',
-    song: 'One Sweet Day',
-    weeksAtOne: 16
-  }
-];
 
 // Standard URI format: mongodb://[dbuser:dbpassword@]host:port/dbname, details set in .env
 var uri = 'mongodb://'+process.env.USER+':'+process.env.PASS+'@'+process.env.HOST+':'+process.env.PORT+'/'+process.env.DB;
