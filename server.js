@@ -12,8 +12,12 @@
 
 // init project
 var express = require('express');
-var mongodb = require('mongodb');
+var mongo = require('mongodb').MongoClient;
 var app = express();
+
+// Standard URI format: mongodb://[dbuser:dbpassword@]host:port/dbname
+
+var uri = 'mongodb://user:pass@host:port/db';
 
 const GoogleImages = require('google-images');
  
@@ -23,6 +27,9 @@ app.use(express.static('public'));
 
 app.get("/:imgsrch/:offset", function (req, res) {
   console.log(req.imgsrch, req.offset, req.params)
+  mongo.connect(uri, function(err, db) {
+    
+  });
   var newSearch = client.search(req.imgsrch)
     .then(images => {
         /*
