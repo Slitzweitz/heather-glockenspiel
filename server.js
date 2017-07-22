@@ -29,7 +29,8 @@ var Schema = mongoose.Schema;
 var imgSchema = new Schema({
   searchTerm  :  {
     type: String,
-    min: [1, 'spec']
+    max: 6,
+    required: [true, 'please specify search term']
   },
   altText     : String,
   pageUrl     : String,
