@@ -22,6 +22,7 @@ const client = new GoogleImages(process.env.CSEID, process.env.APIKEY);
 app.use(express.static('public'));
 
 app.get("/:imgsrch/:offset", function (req, res) {
+  console.log(req.imgsrch, req.offset, req.params)
   var newSearch = client.search(req.imgsrch)
     .then(images => {
         /*
@@ -40,7 +41,7 @@ app.get("/:imgsrch/:offset", function (req, res) {
          */
     });
   // paginate results 
-  client.search('Steve Angello', {page: 2});
+  client.search('Steve Angello', {page: req.offset});
   res.send(newSearch);
 });
 
