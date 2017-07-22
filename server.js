@@ -28,7 +28,7 @@ app.use(express.static('public'));
 app.get("/:imgsrch/:offset", function (req, res) {
   console.log(req.imgsrch, req.offset, req.params)
   mongo.connect(uri, function(err, db) {
-    
+    db.close();
   });
   var newSearch = client.search(req.imgsrch)
     .then(images => {
