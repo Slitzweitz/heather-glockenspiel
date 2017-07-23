@@ -16,8 +16,6 @@ var mongo = require('mongodb').MongoClient;
 var mongoose = require('mongoose');
 var app = express();
 
-// Standard URI format: mongodb://[dbuser:dbpassword@]host:port/dbname
-
 var uri = process.env.MONGODB_URI;
 
 const GoogleImages = require('google-images');
