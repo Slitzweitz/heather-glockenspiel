@@ -38,11 +38,11 @@ var imgSchema = new Schema({
 
 var imgModel = mongoose.model('imgModel', imgSchema);
  
-app.use(express.static('public'));
+// app.use(express.static('public'));
 
 app.get("/img/:imgsrch/:offset", function (req, res) {
   
-  console.log(req.params.imgsrch, req.params.offset)
+  console.log(req.params.imgsrch, req.params.offset);
   
   mongoose.connect(uri);
   
