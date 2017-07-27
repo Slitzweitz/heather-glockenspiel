@@ -40,9 +40,9 @@ var imgModel = mongoose.model('imgModel', imgSchema);
  
 app.use(express.static('public'));
 
-app.get("/:imgsrch/:offset", function (req, res) {
+app.get("/img/:imgsrch/:offset", function (req, res) {
   
-  console.log(req.imgsrch, req.offset, req.params)
+  console.log(req.params.imgsrch, req.params.offset)
   
   mongoose.connect(uri);
   
