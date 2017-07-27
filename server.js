@@ -30,10 +30,13 @@ var imgSchema = new Schema({
     max: 6,
     required: [true, 'please specify search term']
   },
+  imgUrl      : String,
   altText     : String,
   pageUrl     : String,
-  
+  _imgId      : Schema.Types.ObjectId
 });
+
+var imgModel = mongoose.model('imgModel', imgSchema);
  
 app.use(express.static('public'));
 
