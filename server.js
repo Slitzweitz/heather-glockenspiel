@@ -52,9 +52,9 @@ app.get("/img", function (req, res) {
   
   // define a new instance of the model with the results of the img search as the values
   // first: get the img search results
-  // next: create a schema with results as values
-  // next: save schema into db
-  // next: pass schema to res stream for display
+  // next: create instance of model, with results as values
+  // next: save instance into db
+  // next: pass instance to res stream for display
   
   // var newSearch = client.search(req.imgsrch)
   //   .then(images => {
@@ -73,9 +73,12 @@ app.get("/img", function (req, res) {
   //       }]
   //        */
   //   });
+    var results = new imgModel({
+    
+  });
   // // paginate results 
   // client.search('Steve Angello', {page: req.offset});
   // res.send(newSearch);
 });
 
-app.listen(8080);
+app.listen(3000);
