@@ -18,9 +18,9 @@ var app = express();
 
 var uri = process.env.MONGODB_URI;
 
-const GoogleImages = require('google-images');
+// const GoogleImages = require('google-images');
  
-const client = new GoogleImages('006396959488029172989:gcybejxuaka', process.env.APIKEY);
+// const client = new GoogleImages('006396959488029172989:gcybejxuaka', process.env.APIKEY);
 
 var Schema = mongoose.Schema;
 
@@ -50,26 +50,32 @@ app.get("/img", function (req, res) {
   
   db.on('error', console.error.bind(console, 'MongoDB connection error'));
   
-  var newSearch = client.search(req.imgsrch)
-    .then(images => {
-        /*
-        [{
-            "url": "http://steveangello.com/boss.jpg",
-            "type": "image/jpeg",
-            "width": 1024,
-            "height": 768,
-            "size": 102451,
-            "thumbnail": {
-                "url": "http://steveangello.com/thumbnail.jpg",
-                "width": 512,
-                "height": 512
-            }
-        }]
-         */
-    });
-  // paginate results 
-  client.search('Steve Angello', {page: req.offset});
-  res.send(newSearch);
+  // define a new instance of the model with the results of the img search as the values
+  // first: get the img search results
+  // next: create a schema with results as values
+  // next: save schema into db
+  // next: pass schema to res stream for display
+  
+  // var newSearch = client.search(req.imgsrch)
+  //   .then(images => {
+  //       /*
+  //       [{
+  //           "url": "http://steveangello.com/boss.jpg",
+  //           "type": "image/jpeg",
+  //           "width": 1024,
+  //           "height": 768,
+  //           "size": 102451,
+  //           "thumbnail": {
+  //               "url": "http://steveangello.com/thumbnail.jpg",
+  //               "width": 512,
+  //               "height": 512
+  //           }
+  //       }]
+  //        */
+  //   });
+  // // paginate results 
+  // client.search('Steve Angello', {page: req.offset});
+  // res.send(newSearch);
 });
 
-app.liste.
+app.listen(8080);
