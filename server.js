@@ -72,7 +72,4 @@ app.get("/img", function (req, res) {
   res.send(newSearch);
 });
 
-// listen for requests :)
-var listener = app.listen("3000", function () {
-  console.log('Your app is listening on port ' + listener.address().port);
-});
+app.liste.
