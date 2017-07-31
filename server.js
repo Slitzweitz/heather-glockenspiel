@@ -73,10 +73,10 @@ app.get('/img/:term/', function (req, res) {
   // _imgId      : Schema.Types.ObjectId
   
     var results = new imgModel({
-    
-  });
+      searchTerm: req.para
+    });
   
-  res.send('instance of the model that was passed into db');
+  res.send('instance of the model that was passed into db' + results);
   
   // // paginate results 
   // client.search('Steve Angello', {page: req.offset});
