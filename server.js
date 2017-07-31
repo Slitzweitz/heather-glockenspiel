@@ -62,6 +62,7 @@ app.get('/img/:term', function (req, res) {
             }
         }]
          */
+ 
   
   //  To this model:
   // searchTerm  :  {
@@ -90,7 +91,7 @@ app.get('/img/:term', function (req, res) {
   // // paginate results 
   // client.search('Steve Angello', {page: req.offset});
   // res.send(newSearch);
-});
+);
 
 app.get('/recent/', (req, res) => {
   
