@@ -32,9 +32,7 @@ app.get('/img/:term', function (req, res) {
   // next: create instance of model, with results as values
   // next: save instance into db
   // next: pass instance to res stream for display
-  
-  console.log(req.params, req.params.offset);
-  
+    
   mongoose.connect(uri, { useMongoClient: true });
   
   var db = mongoose.connection;
@@ -78,6 +76,8 @@ app.get('/img/:term', function (req, res) {
       pageUrl: newSearch.url
     });
   
+  console.log(req.params, newSearch);
+
   res.send(newSearch + 'instance of the model that was passed into db' + results);
   
   // // paginate results 
