@@ -40,7 +40,7 @@ var imgModel = mongoose.model('imgModel', imgSchema);
  
 // app.use(express.static('public'));
 
-app.get('img/', function (req, res) {
+app.get('/img/:term:offset', function (req, res) {
   
   console.log(req.params, req.params.offset);
   
