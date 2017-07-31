@@ -44,8 +44,10 @@ app.get('/img/:term', function (req, res) {
   db.on('error', console.error.bind(console, 'MongoDB connection error'));
     
   //  Map this object:
-  var newSearch = client.search(req.params.term)
-    .then(images => {
+  async function newSearch(term) {
+    var result = await client.search(term);
+    return result;
+  };
         /*
         [{
             "url": "http://steveangello.com/boss.jpg",
@@ -60,7 +62,6 @@ app.get('/img/:term', function (req, res) {
             }
         }]
          */
-    });
   
   //  To this model:
   // searchTerm  :  {
@@ -72,6 +73,8 @@ app.get('/img/:term', function (req, res) {
   // altText     : String,
   // pageUrl     : String,
   // _imgId      : Schema.Types.ObjectId
+
+    newSearch(req.params.term);
   
     var results = new imgModel({
       searchTerm: req.params.term,
