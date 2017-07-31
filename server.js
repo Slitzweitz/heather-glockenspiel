@@ -11,36 +11,20 @@
 // where your node app starts
 
 // init project
-var express = require('express');
-var mongo = require('mongodb').MongoClient;
-var mongoose = require('mongoose');
-var app = express();
+var express = require('express'),
+    mongo = require('mongodb').MongoClient,
+    mongoose = require('./imgModel'),
+    app = express();
 
 var uri = process.env.MONGODB_URI;
 
 // const GoogleImages = require('google-images');
  
 // const client = new GoogleImages('006396959488029172989:gcybejxuaka', process.env.APIKEY);
-
-var Schema = mongoose.Schema;
-
-var imgSchema = new Schema({
-  searchTerm  :  {
-    type: String,
-    max: 6,
-    required: [true, 'please specify search term']
-  },
-  imgUrl      : String,
-  altText     : String,
-  pageUrl     : String,
-  _imgId      : Schema.Types.ObjectId
-});
-
-var imgModel = mongoose.model('imgModel', imgSchema);
  
 // app.use(express.static('public'));
 
-app.get('/img/:term:offset', function (req, res) {
+app.get('/img/:term/:offset', function (req, res) {
   
   console.log(req.params, req.params.offset);
   
@@ -76,6 +60,7 @@ app.get('/img/:term:offset', function (req, res) {
     var results = new imgModel({
     
   });
+  res.send('instance of the model that was passed into db');
   // // paginate results 
   // client.search('Steve Angello', {page: req.offset});
   // res.send(newSearch);
