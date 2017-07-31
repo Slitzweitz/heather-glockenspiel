@@ -13,7 +13,8 @@
 // init project
 var express = require('express'),
     mongo = require('mongodb').MongoClient,
-    mongoose = require('./imgModel'),
+    mongoose = require('mongoose'),
+    imgModel = require('./imgModel'),
     app = express();
 
 var uri = process.env.MONGODB_URI;
@@ -24,7 +25,7 @@ var uri = process.env.MONGODB_URI;
  
 // app.use(express.static('public'));
 
-app.get('/img/:term/:offset', function (req, res) {
+app.get('/img/:term/', function (req, res) {
   
   console.log(req.params, req.params.offset);
   
@@ -40,6 +41,8 @@ app.get('/img/:term/:offset', function (req, res) {
   // next: save instance into db
   // next: pass instance to res stream for display
   
+  
+  //  Map this object:
   // var newSearch = client.search(req.imgsrch)
   //   .then(images => {
   //       /*
@@ -57,10 +60,24 @@ app.get('/img/:term/:offset', function (req, res) {
   //       }]
   //        */
   //   });
+  
+  //  To this model:
+  // searchTerm  :  {
+  //   type: String,
+  //   max: 6,
+  //   required: [true, 'please specify search term']
+  // },
+  // imgUrl      : String,
+  // altText     : String,
+  // pageUrl     : String,
+  // _imgId      : Schema.Types.ObjectId
+  
     var results = new imgModel({
     
   });
+  
   res.send('instance of the model that was passed into db');
+  
   // // paginate results 
   // client.search('Steve Angello', {page: req.offset});
   // res.send(newSearch);

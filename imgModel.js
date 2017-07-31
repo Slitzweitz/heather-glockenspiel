@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 
-var imgSchema = new Schema({
+var imgModel = new Schema({
   searchTerm  :  {
     type: String,
     max: 6,
@@ -14,4 +14,4 @@ var imgSchema = new Schema({
   _imgId      : Schema.Types.ObjectId
 });
 
-module.exports = mongoose.model('imgModel', imgSchema);
+module.exports = mongoose.model('imgModel', imgModel);
