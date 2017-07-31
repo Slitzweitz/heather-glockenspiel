@@ -25,6 +25,10 @@ const client = new GoogleImages(process.env.CSEID, process.env.APIKEY);
  
 // app.use(express.static('public'));
 
+app.get('/', (req, res) => {
+  res.send('enter a search term in url');
+});
+
 app.get('/img/:term', function (req, res) {
     
   // define a new instance of the model with the results of the img search as the values
