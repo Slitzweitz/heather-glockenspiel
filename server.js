@@ -78,7 +78,7 @@ app.get('/img/:term', function (req, res) {
       pageUrl: newSearch.url
     });
   
-  res.send(newSearch, 'instance of the model that was passed into db' + results);
+  res.send(newSearch + 'instance of the model that was passed into db' + results);
   
   // // paginate results 
   // client.search('Steve Angello', {page: req.offset});
