@@ -19,13 +19,13 @@ var express = require('express'),
 
 var uri = process.env.MONGODB_URI;
 
-// const GoogleImages = require('google-images');
+const GoogleImages = require('google-images');
  
-// const client = new GoogleImages('006396959488029172989:gcybejxuaka', process.env.APIKEY);
+const client = new GoogleImages('006396959488029172989:gcybejxuaka', process.env.APIKEY);
  
 // app.use(express.static('public'));
 
-app.get('/img/:term?offset=:paginate', function (req, res) {
+app.get('/img/:term', function (req, res) {
   
   console.log(req.params, req.params.offset);
   
@@ -43,23 +43,23 @@ app.get('/img/:term?offset=:paginate', function (req, res) {
   
   
   //  Map this object:
-  // var newSearch = client.search(req.imgsrch)
-  //   .then(images => {
-  //       /*
-  //       [{
-  //           "url": "http://steveangello.com/boss.jpg",
-  //           "type": "image/jpeg",
-  //           "width": 1024,
-  //           "height": 768,
-  //           "size": 102451,
-  //           "thumbnail": {
-  //               "url": "http://steveangello.com/thumbnail.jpg",
-  //               "width": 512,
-  //               "height": 512
-  //           }
-  //       }]
-  //        */
-  //   });
+  var newSearch = client.search(req.imgsrch)
+    .then(images => {
+        /*
+        [{
+            "url": "http://steveangello.com/boss.jpg",
+            "type": "image/jpeg",
+            "width": 1024,
+            "height": 768,
+            "size": 102451,
+            "thumbnail": {
+                "url": "http://steveangello.com/thumbnail.jpg",
+                "width": 512,
+                "height": 512
+            }
+        }]
+         */
+    });
   
   //  To this model:
   // searchTerm  :  {
@@ -73,7 +73,10 @@ app.get('/img/:term?offset=:paginate', function (req, res) {
   // _imgId      : Schema.Types.ObjectId
   
     var results = new imgModel({
-      searchTerm: req.params.term
+      searchTerm: req.params.term,
+      imgUrl: newSearch.url,
+      altText: '',
+      pageUrl: newSearch.
     });
   
   res.send('instance of the model that was passed into db' + results);
@@ -81,6 +84,10 @@ app.get('/img/:term?offset=:paginate', function (req, res) {
   // // paginate results 
   // client.search('Steve Angello', {page: req.offset});
   // res.send(newSearch);
+});
+
+app.get('/recent/', (req, res) => {
+  
 });
 
 app.listen(3000);
