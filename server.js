@@ -21,7 +21,7 @@ var uri = process.env.MONGODB_URI;
 
 const GoogleImages = require('google-images');
  
-const client = new GoogleImages('006396959488029172989:gcybejxuaka', process.env.APIKEY);
+const client = new GoogleImages(process.env.CSEID, process.env.APIKEY);
  
 // app.use(express.static('public'));
 
@@ -73,7 +73,7 @@ app.get('/img/:term', function (req, res) {
   
     var results = new imgModel({
       searchTerm: req.params.term,
-      imgUrl: newSearch.url,
+      imgUrl: newSearch[url],
       altText: '',
       pageUrl: newSearch.url
     });
