@@ -73,7 +73,7 @@ app.get('/img/:term', function (req, res) {
   
     var results = new imgModel({
       searchTerm: req.params.term,
-      imgUrl: newSearch[url],
+      imgUrl: newSearch.url,
       altText: '',
       pageUrl: newSearch.url
     });
