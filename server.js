@@ -26,6 +26,12 @@ const client = new GoogleImages('006396959488029172989:gcybejxuaka', process.env
 // app.use(express.static('public'));
 
 app.get('/img/:term', function (req, res) {
+    
+  // define a new instance of the model with the results of the img search as the values
+  // first: get the img search results
+  // next: create instance of model, with results as values
+  // next: save instance into db
+  // next: pass instance to res stream for display
   
   console.log(req.params, req.params.offset);
   
@@ -34,14 +40,7 @@ app.get('/img/:term', function (req, res) {
   var db = mongoose.connection;
   
   db.on('error', console.error.bind(console, 'MongoDB connection error'));
-  
-  // define a new instance of the model with the results of the img search as the values
-  // first: get the img search results
-  // next: create instance of model, with results as values
-  // next: save instance into db
-  // next: pass instance to res stream for display
-  
-  
+    
   //  Map this object:
   var newSearch = client.search(req.params.term)
     .then(images => {
@@ -79,7 +78,7 @@ app.get('/img/:term', function (req, res) {
       pageUrl: newSearch.url
     });
   
-  res.send('instance of the model that was passed into db' + results);
+  res.send(newSearch, 'instance of the model that was passed into db' + results);
   
   // // paginate results 
   // client.search('Steve Angello', {page: req.offset});
