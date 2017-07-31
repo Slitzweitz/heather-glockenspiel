@@ -29,7 +29,7 @@ app.get('/img/:term', function (req, res) {
   
   console.log(req.params, req.params.offset);
   
-  mongoose.connect(uri);
+  mongoose.connect(uri, { useMongoClient: true });
   
   var db = mongoose.connection;
   
@@ -43,7 +43,7 @@ app.get('/img/:term', function (req, res) {
   
   
   //  Map this object:
-  var newSearch = client.search(req.imgsrch)
+  var newSearch = client.search(req.params.term)
     .then(images => {
         /*
         [{
@@ -76,7 +76,7 @@ app.get('/img/:term', function (req, res) {
       searchTerm: req.params.term,
       imgUrl: newSearch.url,
       altText: '',
-      pageUrl: newSearch.
+      pageUrl: newSearch.url
     });
   
   res.send('instance of the model that was passed into db' + results);
