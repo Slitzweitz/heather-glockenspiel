@@ -48,7 +48,7 @@ app.get('/img/:term', function (req, res) {
   //  Map this object:
   function newSearch(callback) {
     var result = client.search(req.params.term);
-    return result;
+    return callback(result);
   };
         /*
         [{
@@ -83,6 +83,9 @@ app.get('/img/:term', function (req, res) {
       altText: '',
       pageUrl: newSearch.url
     });
+  results.save((err) => {
+    
+  })
   
   console.log(req.params, newSearch);
 
