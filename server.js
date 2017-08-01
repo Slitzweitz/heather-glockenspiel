@@ -36,15 +36,17 @@ app.get('/img/:term', function (req, res) {
   // next: create instance of model, with results as values
   // next: save instance into db
   // next: pass instance to res stream for display
-    
-  mongoose.connect(uri, { useMongoClient: true });
-  
-  var db = mongoose.connection;
+      
+  var db = mongoose.createConnection(uri);
   
   db.on('error', console.error.bind(console, 'MongoDB connection error'));
   
+  db.once('open', function() {
+    conso
+  })
+  
   asyncSearch(req.params.term, function(data) {
-    
+    res.send(data);
   });
     
   //  Map this object:
@@ -63,7 +65,7 @@ app.get('/img/:term', function (req, res) {
       if (err) return err;
     });
     
-    return callback(newSearch);
+    callback(newSearch);
   };
         /*
         [{
@@ -94,9 +96,9 @@ app.get('/img/:term', function (req, res) {
  
   
     
-  console.log(req.params, newSearch);
+  console.log(req.params);
 
-  res.send(newSearch + 'instance of the model that was passed into db' + results);
+  res.send('instance of the model that was passed into db');
   
   // // paginate results 
   // client.search('Steve Angello', {page: req.offset});
