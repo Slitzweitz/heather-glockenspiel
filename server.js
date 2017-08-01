@@ -60,10 +60,11 @@ app.get('/img/:term', function (req, res) {
         pageUrl: newSearch.url
       });
       
-      results.save((err) => {
+      var insertPromise = results.save();
+      insertPromise.then((err) => {
         if (err) return err;
         console.log('inserted document');
-      });   
+      })
       
       callback(newSearch);
     }
