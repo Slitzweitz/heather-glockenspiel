@@ -48,6 +48,11 @@ app.get('/img/:term', function (req, res) {
   //  Map this object:
   function newSearch(callback) {
     var result = client.search(req.params.term);
+    
+    results.save((err) => {
+      if (err) return err;
+    });
+    
     return callback(result);
   };
         /*
@@ -77,16 +82,13 @@ app.get('/img/:term', function (req, res) {
   // pageUrl     : String,
   // _imgId      : Schema.Types.ObjectId
  
-    var results = new imgModel({
-      searchTerm: req.params.term,
-      imgUrl: newSearch.url,
-      altText: '',
-      pageUrl: newSearch.url
-    });
-  results.save((err) => {
+  var results = new imgModel({
+    searchTerm: req.params.term,
+    imgUrl: newSearch.url,
+    altText: '',
+    pageUrl: newSearch.url
+  });
     
-  })
-  
   console.log(req.params, newSearch);
 
   res.send(newSearch + 'instance of the model that was passed into db' + results);
