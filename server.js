@@ -42,7 +42,7 @@ app.get('/img/:term', function (req, res) {
   db.on('error', console.error.bind(console, 'MongoDB connection error'));
   
   db.once('open', function() {
-    conso
+    console.log('connected')
   })
   
   asyncSearch(req.params.term, function(data) {
