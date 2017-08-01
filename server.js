@@ -13,7 +13,6 @@
 // init project
 var express = require('express'),
     mongo = require('mongodb').MongoClient,
-    mongoose = require('mongoose'),
     imgModel = require('./imgModel'),
     app = express();
 
@@ -36,37 +35,40 @@ app.get('/img/:term', function (req, res) {
   // next: create instance of model, with results as values
   // next: save instance into db
   // next: pass instance to res stream for display
+
+  mongo.connect(uri, function(err, db) {
+    if (err) throw err;
+    
+    console.log('connected');
+    
+    var collection = db.collection('')
+    
+    asyncSearch(function(data) {
       
-  var db = mongoose.createConnection(uri);
-  
-  db.on('error', console.error.bind(console, 'MongoDB connection error'));
-  
-  db.once('open', function() {
-    console.log('connected')
-  })
-  
-  asyncSearch(req.params.term, function(data) {
-    res.send(data);
+      res.send(data);
+      
+    });
+
+    function asyncSearch(callback) {
+    
+      var newSearch = client.search(req.params.term);
+      
+      var results = new imgModel({
+        searchTerm: req.params.term,
+        imgUrl: newSearch.url,
+        altText: '',
+        pageUrl: newSearch.url
+      });
+      
+      results.save((err) => {
+        if (err) return err;
+        console.log('inserted document');
+      });   
+      
+      callback(newSearch);
+    };
   });
-    
-  //  Map this object:
-  function asyncSearch(callback) {
-    
-    var newSearch = client.search(req.params.term);
-    
-    var results = new imgModel({
-      searchTerm: req.params.term,
-      imgUrl: newSearch.url,
-      altText: '',
-      pageUrl: newSearch.url
-    });
-    
-    results.save((err) => {
-      if (err) return err;
-    });
-    
-    callback(newSearch);
-  };
+
         /*
         [{
             "url": "http://steveangello.com/boss.jpg",
@@ -93,9 +95,7 @@ app.get('/img/:term', function (req, res) {
   // altText     : String,
   // pageUrl     : String,
   // _imgId      : Schema.Types.ObjectId
- 
-  
-    
+   
   console.log(req.params);
 
   res.send('instance of the model that was passed into db');
