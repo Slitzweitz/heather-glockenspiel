@@ -47,12 +47,12 @@ app.get('/img/:term', function (req, res) {
     
       var newSearch = client.search(req.params.term);
       
-      var results = new imgModel({
+      var results = {
         searchTerm: req.params.term,
         imgUrl: newSearch.url,
         altText: '',
         pageUrl: newSearch.url
-      });
+      };
       
       var insertPromise = results.save();
       
