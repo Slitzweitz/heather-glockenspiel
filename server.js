@@ -13,7 +13,6 @@
 // init project
 var express = require('express'),
     mongo = require('mongodb').MongoClient,
-    imgModel = require('./imgModel'),
     app = express();
 
 var uri = process.env.MONGODB_URI;
