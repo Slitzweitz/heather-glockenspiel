@@ -61,9 +61,9 @@ app.get('/img/:term', function (req, res) {
       });
       
       var insertPromise = results.save();
-      insertPromise.then((err) => {
-        if (err) return err;
-        console.log('inserted document');
+      
+      insertPromise.then((doc) => {
+        console.log('inserted document' + doc);
       })
       
       callback(newSearch);
