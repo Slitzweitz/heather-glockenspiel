@@ -42,10 +42,12 @@ app.get('/img/:term', function (req, res) {
   var db = mongoose.connection;
   
   db.on('error', console.error.bind(console, 'MongoDB connection error'));
+  
+  newSearch(req.params.term);
     
   //  Map this object:
-  async function newSearch(term) {
-    var result = await client.search(term);
+  function newSearch(callback) {
+    var result = client.search(req.params.term);
     return result;
   };
         /*
@@ -74,9 +76,7 @@ app.get('/img/:term', function (req, res) {
   // altText     : String,
   // pageUrl     : String,
   // _imgId      : Schema.Types.ObjectId
-
-    newSearch(req.params.term);
-  
+ 
     var results = new imgModel({
       searchTerm: req.params.term,
       imgUrl: newSearch.url,
@@ -91,7 +91,7 @@ app.get('/img/:term', function (req, res) {
   // // paginate results 
   // client.search('Steve Angello', {page: req.offset});
   // res.send(newSearch);
-);
+});
 
 app.get('/recent/', (req, res) => {
   
