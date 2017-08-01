@@ -47,13 +47,13 @@ app.get('/img/:term', function (req, res) {
     
   //  Map this object:
   function newSearch(callback) {
-    var result = client.search(req.params.term);
+    var newSearch = client.search(req.params.term);
     
     results.save((err) => {
       if (err) return err;
     });
     
-    return callback(result);
+    return callback(newSearch, );
   };
         /*
         [{
