@@ -27,13 +27,8 @@ app.get('/', (req, res) => {
   res.send('enter a search term in url');
 });
 
+
 app.get('/img/:term', function (req, res) {
-    
-  // define a new instance of the model with the results of the img search as the values
-  // first: get the img search results
-  // next: create instance of model, with results as values
-  // next: save instance into db
-  // next: pass instance to res stream for display
 
   mongo.connect(uri, function(err, db) {
     if (err) throw err;
