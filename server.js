@@ -43,17 +43,27 @@ app.get('/img/:term', function (req, res) {
   
   db.on('error', console.error.bind(console, 'MongoDB connection error'));
   
-  newSearch(req.params.term);
+  asyncSearch(req.params.term, function(data) {
+    
+  });
     
   //  Map this object:
-  function newSearch(callback) {
+  function asyncSearch(callback) {
+    
     var newSearch = client.search(req.params.term);
+    
+    var results = new imgModel({
+      searchTerm: req.params.term,
+      imgUrl: newSearch.url,
+      altText: '',
+      pageUrl: newSearch.url
+    });
     
     results.save((err) => {
       if (err) return err;
     });
     
-    return callback(newSearch, );
+    return callback(newSearch);
   };
         /*
         [{
@@ -82,12 +92,7 @@ app.get('/img/:term', function (req, res) {
   // pageUrl     : String,
   // _imgId      : Schema.Types.ObjectId
  
-  var results = new imgModel({
-    searchTerm: req.params.term,
-    imgUrl: newSearch.url,
-    altText: '',
-    pageUrl: newSearch.url
-  });
+  
     
   console.log(req.params, newSearch);
 
