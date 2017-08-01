@@ -41,7 +41,7 @@ app.get('/img/:term', function (req, res) {
     
     console.log('connected');
     
-    var collection = db.collection('')
+    var collection = db.collection('imgmodels')
     
     asyncSearch(function(data) {
       
@@ -66,7 +66,10 @@ app.get('/img/:term', function (req, res) {
       });   
       
       callback(newSearch);
-    };
+    }
+    
+    db.close();
+    
   });
 
         /*
