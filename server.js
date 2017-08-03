@@ -10,10 +10,13 @@
 // server.js
 // where your node app starts
 
+'use strict'
+
 // init project
 var express = require('express'),
     mongo = require('mongodb').MongoClient,
-    app = express();
+    app = express(),
+    google = require(;
 
 var uri = process.env.MONGODB_URI;
 
