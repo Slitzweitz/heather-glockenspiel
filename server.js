@@ -39,6 +39,13 @@ app.get('/img/:term', function (req, res) {
     
     asyncSearch(function(data) {
       
+      var results = {
+        searchTerm: req.params.term,
+        imgUrl: data.url,
+        altText: '',
+        pageUrl: data.url
+      };
+      
       res.send(data);
       
     });
@@ -46,18 +53,9 @@ app.get('/img/:term', function (req, res) {
     function asyncSearch(callback) {
     
       var newSearch = client.search(req.params.term);
-      
-      var results = {
-        searchTerm: req.params.term,
-        imgUrl: newSearch.url,
-        altText: '',
-        pageUrl: newSearch.url
-      };
-      
-      var insertPromise = results.save();
-      
-      insertPromise.then((doc) => {
-        console.log('inserted document' + doc);
+            
+      newSearch.then((doc) => {
+        console.log('here is search result: ' + doc);
       })
       
       callback(newSearch);
