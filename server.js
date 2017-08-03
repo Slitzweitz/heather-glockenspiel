@@ -46,9 +46,14 @@ app.get('/img/:term', function (req, res) {
         return console.log('An error occured', err);
       }
       // Got the response from custom search
-      console.log('Result: ' + resp.searchInformation.formattedTotalResults);
+      console.log('Result: ' + resp.searchInformation);
       if (resp.items && resp.items.length > 0) {
         console.log('First result name is ' + resp.items[0].title);
+        // create object to insert here
+        var dbDoc = {
+          term : resp.items[0].title,
+          numResults : resp.searchInformation.forMattedTotalResults
+        }
       }
     });
         
