@@ -37,25 +37,34 @@ app.get('/img/:term', function (req, res) {
     
     var collection = db.collection('imgmodels')
     
-    asyncSearch(function(data) {
+    asyncInsert((data) => {
+      console.log(data);
+    })
+    
+    asyncSearch((data) => {
       
       var results = {
         searchTerm: req.params.term,
         imgUrl: data.url,
         altText: '',
         pageUrl: data.url
-      };
-      
-      res.send(data);
-      
-    });
+      }; 
+      res.send(data);      
+    })
 
     function asyncSearch(callback) {
-    
-      var newSearch = client.search(req.params.term);
-            
+      var newSearch = client.search(req.params.term);           
       newSearch.then((doc) => {
         console.log('here is search result: ' + doc);
+        callback(doc);
+      });
+    }
+    
+    function asyncInsert(callback) {
+      collection.insertOne({
+        term : req.params.term
+      }, (err, doc) => {
+        require('assert').equal(null, err);
         callback(doc);
       });
     }
@@ -63,38 +72,6 @@ app.get('/img/:term', function (req, res) {
     db.close();
     
   });
-
-        /*
-        [{
-            "url": "http://steveangello.com/boss.jpg",
-            "type": "image/jpeg",
-            "width": 1024,
-            "height": 768,
-            "size": 102451,
-            "thumbnail": {
-                "url": "http://steveangello.com/thumbnail.jpg",
-                "width": 512,
-                "height": 512
-            }
-        }]
-         */
- 
-  
-  //  To this model:
-  // searchTerm  :  {
-  //   type: String,
-  //   max: 6,
-  //   required: [true, 'please specify search term']
-  // },
-  // imgUrl      : String,
-  // altText     : String,
-  // pageUrl     : String,
-  // _imgId      : Schema.Types.ObjectId
-   
-  console.log(req.params);
-
-  res.send('instance of the model that was passed into db');
-  
   // // paginate results 
   // client.search('Steve Angello', {page: req.offset});
   // res.send(newSearch);
