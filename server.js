@@ -56,9 +56,8 @@ app.get('/img/:term', function (req, res) {
             
       newSearch.then((doc) => {
         console.log('here is search result: ' + doc);
-      })
-      
-      callback(newSearch);
+        callback(newSearch);
+      });
     }
     
     db.close();
