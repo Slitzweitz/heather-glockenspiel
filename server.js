@@ -37,9 +37,15 @@ app.get('/img/:term', function (req, res) {
     
     var collection = db.collection('imgmodels')
     
+    function promiseSearch(searchTerm) {
+      return new Promise((resolve, reject) => {
+        
+      })
+    }
+    
+    
     let testSearch = client.search(req.params.term);
     
-    testSearch.
     
     asyncInsert((data) => {
       console.log(data);
