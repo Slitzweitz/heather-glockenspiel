@@ -16,7 +16,8 @@
 var express = require('express'),
     mongo = require('mongodb').MongoClient,
     app = express(),
-    google = require(;
+    google = require('googleapis'),
+    customsearch = google.customsearch('v1');
 
 var uri = process.env.MONGODB_URI;
 
@@ -38,14 +39,18 @@ app.get('/img/:term', function (req, res) {
     
     console.log('connected');
     
-    var collection = db.collection('imgmodels')
+    var collection = db.collection('imgmodels');
    
-    client.search('Steve Angello')
-	    .then(images => {
-        console.log(images);
-      }).catch(err => {
-        if (err) return err;
-      });
+    customsearch.cse.list({ cx: process.env.CSEID, q: req.params.term, auth: process.env.APIKEY }, function (err, resp) {
+      if (err) {
+        return console.log('An error occured', err);
+      }
+      // Got the response from custom search
+      console.log('Result: ' + resp.searchInformation.formattedTotalResults);
+      if (resp.items && resp.items.length > 0) {
+        console.log('First result name is ' + resp.items[0].title);
+      }
+    });
         
     asyncInsert((data) => {
       // console.log(data);
@@ -60,6 +65,12 @@ app.get('/img/:term', function (req, res) {
       });
     }
     
+    // client.search('Steve Angello')
+    // .then(images => {
+    //     console.log(images);
+    //   }).catch(err => {
+    //     if (err) return err;
+    //   });
 //     asyncSearch((data) => {
       
 //       var results = {
