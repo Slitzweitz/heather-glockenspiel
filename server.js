@@ -36,39 +36,17 @@ app.get('/img/:term', function (req, res) {
     console.log('connected');
     
     var collection = db.collection('imgmodels')
-    
-    function promiseSearch(searchTerm) {
-      return new Promise((resolve, reject) => {
-        
-      })
-    }
-    
-    
-    let testSearch = client.search(req.params.term);
-    
-    
-    asyncInsert((data) => {
-      console.log(data);
-    })
-    
-    asyncSearch((data) => {
-      
-      var results = {
-        searchTerm: req.params.term,
-        imgUrl: data.url,
-        altText: '',
-        pageUrl: data.url
-      }; 
-      res.send(data);      
-    })
-
-    function asyncSearch(callback) {
-      var newSearch = client.search(req.params.term);           
-      newSearch.then((doc) => {
-        console.log('here is search result: ' + doc);
-        callback(doc);
+   
+    client.search('Steve Angello')
+	    .then(images => {
+        console.log(images);
+      }).catch(err => {
+        return err;
       });
-    }
+        
+    asyncInsert((data) => {
+      // console.log(data);
+    });
     
     function asyncInsert(callback) {
       collection.insertOne({
@@ -78,6 +56,27 @@ app.get('/img/:term', function (req, res) {
         callback(doc);
       });
     }
+    
+//     asyncSearch((data) => {
+      
+//       var results = {
+//         searchTerm: req.params.term,
+//         imgUrl: data.url,
+//         altText: '',
+//         pageUrl: data.url
+//       }; 
+//       res.send(data);      
+//     })
+
+//     function asyncSearch(callback) {
+//       var newSearch = client.search(req.params.term);           
+//       newSearch.then((doc) => {
+//         console.log('here is search result: ' + doc);
+//         callback(doc);
+//       });
+//     }
+    
+
     
     db.close();
     
