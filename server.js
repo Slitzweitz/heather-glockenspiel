@@ -41,7 +41,7 @@ app.get('/img/:term', function (req, res) {
 	    .then(images => {
         console.log(images);
       }).catch(err => {
-        return err;
+        if (err) return err;
       });
         
     asyncInsert((data) => {
