@@ -35,7 +35,9 @@ app.get('/', (req, res) => {
 
 
 app.get('/img/:term', function (req, res) {
-
+  if (req.params.offset) {
+    console.log(req.params.offset);
+  }
   mongo.connect(uri, function(err, db) {
     if (err) throw err;
     
@@ -87,12 +89,10 @@ app.get('/img/:term', function (req, res) {
 
 app.get('/img/:term?:offset', (req, res) => {
   
-    console.log(req.params.terms.offset);
-  
 });
 
-app.get('/recent/', (req, res) => {
-  
+app.get('/img/recent/', (req, res) => {
+  // search for most recent 
 });
 
 app.listen(3000);
