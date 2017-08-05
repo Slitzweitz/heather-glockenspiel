@@ -54,17 +54,16 @@ app.get('/img/:term', function (req, res) {
         return console.log('An error occured', err);
       }
       // Got the response from custom search
-      console.log('Result: ' + resp.searchInformation);
-      if (resp.items && resp.items.length > 0) {
-        console.log('First result name is ' + resp.items[0].title);
-        // create object to insert here
-        var dbDoc = {
-          link : resp.items[0].link,
-          altText : resp.items[0].snippet,
-          pageUrl : resp.items[0].image.contextLink
+      var final = [];
+      for (var x = 0; x < 100; x++) {
+        var dbForDoc = {
+          link : resp.items[x].link,
+          altText : resp.items[x].snippet,
+          pageUrl : resp.items[x].image.contextLink
         };
-        res.send(dbDoc);
-      }
+        final.push(dbForDoc);
+      }      
+      res.send(final);
     });
         
     asyncInsert((data) => {
