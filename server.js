@@ -42,8 +42,29 @@ app.get('/img/:term', function (req, res) {
     console.log('connected');
     
     var collection = db.collection('imgmodels');
+    
+    /* img URL = items: [{
+                    link: IMGURL,
+                    snippet: ALTTEXT,
+                    image: {
+                      contextLunk: PAGEURL
+                      }
+                    }], alt text, page url
+    
+    */
    
-    customsearch.cse.list({ cx: process.env.CSEID, q: req.params.term, auth: process.env.APIKEY }, function (err, resp) {
+    customsearch.cse.list({ 
+      cx: process.env.CSEID, 
+      q: req.params.term, 
+      auth: process.env.APIKEY,
+      searchType: 'image',
+      items: {
+                    link: IMGURL,
+                    snippet: ALTTEXT,
+                    image: {
+                      contextLunk: PAGEURL
+                      }
+                    }}, function (err, resp) {
       if (err) {
         return console.log('An error occured', err);
       }
