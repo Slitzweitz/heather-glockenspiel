@@ -86,9 +86,9 @@ app.get('/img/:term', function (req, res) {
 });
 
 app.get('/img/:term?:offset', (req, res) => {
-  if (req.params.offset) {
+  
     console.log(req.params.offset);
-  }
+  
 });
 
 app.get('/recent/', (req, res) => {
