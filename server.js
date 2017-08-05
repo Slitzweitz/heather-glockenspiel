@@ -87,7 +87,7 @@ app.get('/img/:term', function (req, res) {
 
 app.get('/img/:term?:offset', (req, res) => {
   
-    console.log(req.params.offset);
+    console.log(req.params.terms.offset);
   
 });
 
