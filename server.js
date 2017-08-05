@@ -42,6 +42,7 @@ app.get('/img/:term', function (req, res) {
     console.log('connected');
     
     var collection = db.collection('imgmodels');
+    var final = [];
 
     customsearch.cse.list({ 
       cx: process.env.CSEID, 
@@ -54,15 +55,14 @@ app.get('/img/:term', function (req, res) {
         return console.log('An error occured', err);
       }
       // Got the response from custom search
-      var final = [];
-      for (var x = 0; x < 100; x++) {
+      resp.items.forEach((doc) => {
         var dbForDoc = {
-          link : resp.items[x].link,
-          altText : resp.items[x].snippet,
-          pageUrl : resp.items[x].image.contextLink
+          link : doc.link,
+          altText : doc.snippet,
+          pageUrl : doc.image.contextLink
         };
         final.push(dbForDoc);
-      }      
+      })   
       res.send(final);
     });
         
@@ -77,41 +77,16 @@ app.get('/img/:term', function (req, res) {
         require('assert').equal(null, err);
         callback(doc);
       });
-    }
-    
-    // client.search('Steve Angello')
-    // .then(images => {
-    //     console.log(images);
-    //   }).catch(err => {
-    //     if (err) return err;
-    //   });
-//     asyncSearch((data) => {
-      
-//       var results = {
-//         searchTerm: req.params.term,
-//         imgUrl: data.url,
-//         altText: '',
-//         pageUrl: data.url
-//       }; 
-//       res.send(data);      
-//     })
-
-//     function asyncSearch(callback) {
-//       var newSearch = client.search(req.params.term);           
-//       newSearch.then((doc) => {
-//         console.log('here is search result: ' + doc);
-//         callback(doc);
-//       });
-//     }
-    
-
-    
-    db.close();
-    
+    } 
+    db.close();   
   });
   // // paginate results 
   // client.search('Steve Angello', {page: req.offset});
   // res.send(newSearch);
+});
+
+app.get('/img/:term?:offset', (req, res) => {
+  
 });
 
 app.get('/recent/', (req, res) => {
