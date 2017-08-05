@@ -42,17 +42,7 @@ app.get('/img/:term', function (req, res) {
     console.log('connected');
     
     var collection = db.collection('imgmodels');
-    
-    /* img URL = items: [{
-                    link: IMGURL,
-                    snippet: ALTTEXT,
-                    image: {
-                      contextLink: PAGEURL
-                      }
-                    }], alt text, page url
-    
-    */
-   
+
     customsearch.cse.list({ 
       cx: process.env.CSEID, 
       q: req.params.term, 
