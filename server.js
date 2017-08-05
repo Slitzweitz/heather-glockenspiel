@@ -47,7 +47,7 @@ app.get('/img/:term', function (req, res) {
                     link: IMGURL,
                     snippet: ALTTEXT,
                     image: {
-                      contextLunk: PAGEURL
+                      contextLink: PAGEURL
                       }
                     }], alt text, page url
     
@@ -58,13 +58,8 @@ app.get('/img/:term', function (req, res) {
       q: req.params.term, 
       auth: process.env.APIKEY,
       searchType: 'image',
-      items: {
-                    link: IMGURL,
-                    snippet: ALTTEXT,
-                    image: {
-                      contextLunk: PAGEURL
-                      }
-                    }}, function (err, resp) {
+      fields: 'context,items(displayLink,formattedUrl,htmlSnippet,image(contextLink,thumbnailLink),labels,link,snippet),url'
+    }, function (err, resp) {
       if (err) {
         return console.log('An error occured', err);
       }
@@ -74,9 +69,11 @@ app.get('/img/:term', function (req, res) {
         console.log('First result name is ' + resp.items[0].title);
         // create object to insert here
         var dbDoc = {
-          term : resp.items[0].title,
-          numResults : resp.searchInformation.forMattedTotalResults
-        }
+          link : resp.items[0].link,
+          altText : resp.items[0].snippet,
+          pageUrl : resp.items[0].image.contextLink
+        };
+        res.send(dbDoc);
       }
     });
         
