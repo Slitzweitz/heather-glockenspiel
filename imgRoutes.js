@@ -77,14 +77,14 @@ router.get('/img/:term?offset=:paginate', (req, res) => {
     
     var final = [];
       
-    var 
+    var startIndex = req.params.paginate * 10;
 
     customsearch.cse.list({ 
       cx: process.env.CSEID, 
       q: req.params.term, 
       auth: process.env.APIKEY,
       searchType: 'image',
-      start: req.params.paginate * 10,
+      start: startIndex,
       fields: 'items(image/contextLink,link,snippet)'
     }, (err, resp) => {
       if (err) {
