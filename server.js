@@ -51,7 +51,7 @@ app.get('/img/:term', function (req, res) {
       q: req.params.term, 
       auth: process.env.APIKEY,
       searchType: 'image',
-      fields: 'context,items(displayLink,formattedUrl,htmlSnippet,image(contextLink,thumbnailLink),labels,link,snippet),url'
+      fields: 'items(image/contextLink,link,snippet)'
     }, function (err, resp) {
       if (err) {
         return console.log('An error occured', err);
@@ -87,7 +87,7 @@ app.get('/img/:term', function (req, res) {
   // res.send(newSearch);
 });
 
-app.get('/img/:term?:offset', (req, res) => {
+app.get('/img/:term:offset', (req, res) => {
   
 });
 
