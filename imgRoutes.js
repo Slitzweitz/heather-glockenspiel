@@ -76,12 +76,15 @@ router.get('/img/:term?offset=:paginate', (req, res) => {
     console.log('connected');
     
     var final = [];
+      
+    var 
 
     customsearch.cse.list({ 
       cx: process.env.CSEID, 
       q: req.params.term, 
       auth: process.env.APIKEY,
       searchType: 'image',
+      start: req.params.paginate * 10,
       fields: 'items(image/contextLink,link,snippet)'
     }, (err, resp) => {
       if (err) {
