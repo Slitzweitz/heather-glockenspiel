@@ -10,6 +10,18 @@ var express = require('express'),
 
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
+  asyncInsert((data) => {
+      // console.log(data);
+    });
+    
+    function asyncInsert(callback) {
+      collection.insertOne({
+        term : req.params.term
+      }, (err, doc) => {
+        require('assert').equal(null, err);
+        callback(doc);
+      });
+    } 
   console.log('Time: ', Date.now())
   next()
 })
@@ -19,11 +31,11 @@ router.get('/', (req, res) => {
 });
 // define the about route
 
-router.get('/img/:term', function (req, res) {
+router.get('/img/:term', (req, res) => {
   if (req.params.offset) {
     console.log(req.params.offset);
   }
-  mongo.connect(uri, function(err, db) {
+  mongo.connect(uri, (err, db) => {
     if (err) throw err;
     
     console.log('connected');
@@ -37,7 +49,7 @@ router.get('/img/:term', function (req, res) {
       auth: process.env.APIKEY,
       searchType: 'image',
       fields: 'items(image/contextLink,link,snippet)'
-    }, function (err, resp) {
+    }, (err, resp) => {
       if (err) {
         return console.log('An error occured', err);
       }
@@ -53,18 +65,6 @@ router.get('/img/:term', function (req, res) {
       res.send(final);
     });
         
-    asyncInsert((data) => {
-      // console.log(data);
-    });
-    
-    function asyncInsert(callback) {
-      collection.insertOne({
-        term : req.params.term
-      }, (err, doc) => {
-        require('assert').equal(null, err);
-        callback(doc);
-      });
-    } 
     db.close();   
   });
   // // paginate results 

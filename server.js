@@ -18,10 +18,12 @@ User Story: I can get a list of the most recently submitted search strings.
 var express = require('express'),
     app = express(),
     imgRoutes = require('./imgRoutes');
+
+app.use('/', imgRoutes);
     
 app.use('/img/:term', imgRoutes);
 
-app.get('/img/:term:offset', (req, res) => {
+app.get('/img/:term/:offset?', (req, res) => {
   
 });
 
