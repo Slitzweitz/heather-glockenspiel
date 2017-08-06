@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 });
 // define the about route
 
-router.get('/img/:term*', (req, res) => {
+router.get('/img/:term', (req, res) => {
   var paginate = req.query.offset * 10;
   
   mongo.connect(uri, (err, db) => {
