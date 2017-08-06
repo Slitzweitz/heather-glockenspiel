@@ -98,7 +98,7 @@ router.get('/img/:term?offset=:paginate', (req, res) => {
         };
         final.push(dbForDoc);
       })
-      //  still in 
+      //  still in search callback
       res.send(final);
     });
         
