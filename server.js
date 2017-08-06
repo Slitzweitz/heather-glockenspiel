@@ -18,69 +18,14 @@ User Story: I can get a list of the most recently submitted search strings.
 var express = require('express'),
     mongo = require('mongodb').MongoClient,
     app = express(),
-    imgRoutes = require('imgRoutes'),
+    imgRoutes = require('./imgRoutes'),
     google = require('googleapis'),
     customsearch = google.customsearch('v1');
 
-var uri = process.env.MONGODB_URI;
-
-app.get('/', (req, res) => {
-  res.send('enter a search term in url');
-});
 
 
-app.get('/img/:term', function (req, res) {
-  if (req.params.offset) {
-    console.log(req.params.offset);
-  }
-  mongo.connect(uri, function(err, db) {
-    if (err) throw err;
-    
-    console.log('connected');
-    
-    var collection = db.collection('imgmodels');
-    var final = [];
 
-    customsearch.cse.list({ 
-      cx: process.env.CSEID, 
-      q: req.params.term, 
-      auth: process.env.APIKEY,
-      searchType: 'image',
-      fields: 'items(image/contextLink,link,snippet)'
-    }, function (err, resp) {
-      if (err) {
-        return console.log('An error occured', err);
-      }
-      // Got the response from custom search
-      resp.items.forEach((doc) => {
-        var dbForDoc = {
-          link : doc.link,
-          altText : doc.snippet,
-          pageUrl : doc.image.contextLink
-        };
-        final.push(dbForDoc);
-      })   
-      res.send(final);
-    });
-        
-    asyncInsert((data) => {
-      // console.log(data);
-    });
-    
-    function asyncInsert(callback) {
-      collection.insertOne({
-        term : req.params.term
-      }, (err, doc) => {
-        require('assert').equal(null, err);
-        callback(doc);
-      });
-    } 
-    db.close();   
-  });
-  // // paginate results 
-  // client.search('Steve Angello', {page: req.offset});
-  // res.send(newSearch);
-});
+
 
 app.get('/img/:term:offset', (req, res) => {
   
