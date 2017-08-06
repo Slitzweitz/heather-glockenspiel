@@ -7,21 +7,9 @@ var express = require('express'),
     customsearch = google.customsearch('v1'),
     uri = process.env.MONGODB_URI;
 
-
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
-  asyncInsert((data) => {
-      // console.log(data);
-    });
-    
-    function asyncInsert(callback) {
-      collection.insertOne({
-        term : req.params.term
-      }, (err, doc) => {
-        require('assert').equal(null, err);
-        callback(doc);
-      });
-    } 
+
   console.log('Time: ', Date.now())
   next()
 })
@@ -61,7 +49,18 @@ router.get('/img/:term', (req, res) => {
       })   
       res.send(final);
     });
-        
+      asyncInsert((data) => {
+      // console.log(data);
+    });
+    
+    function asyncInsert(callback) {
+      collection.insertOne({
+        term : req.params.term
+      }, (err, doc) => {
+        require('assert').equal(null, err);
+        callback(doc);
+      });
+    }     
     db.close();   
   });
   // // paginate results 
@@ -76,7 +75,6 @@ router.get('/img/:term?offset=:paginate', (req, res) => {
     
     console.log('connected');
     
-    var collection = db.collection('imgmodels');
     var final = [];
 
     customsearch.cse.list({ 
