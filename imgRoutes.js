@@ -68,7 +68,7 @@ router.get('/img/:term', (req, res) => {
   // res.send(newSearch);
 });
 
-router.get('/img/:term?offset=:paginate', (req, res) => {
+router.get('/img/:term([\?])offset=:paginate', (req, res) => {
   if (Number.isInteger(req.params.paginate)) {
     mongo.connect(uri, (err, db) => {
     if (err) throw err;
@@ -77,7 +77,8 @@ router.get('/img/:term?offset=:paginate', (req, res) => {
     
     var final = [];
       
-    var startIndex = req.params.paginate * 10;
+    var startIndex = req.params.paginate;
+    console.log(startIndex);
 
     customsearch.cse.list({ 
       cx: process.env.CSEID, 
