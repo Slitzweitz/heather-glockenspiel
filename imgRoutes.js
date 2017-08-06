@@ -32,9 +32,6 @@ router.get('/', (req, res) => {
 // define the about route
 
 router.get('/img/:term', (req, res) => {
-  if (req.params.offset) {
-    console.log(req.params.offset);
-  }
   mongo.connect(uri, (err, db) => {
     if (err) throw err;
     
@@ -70,6 +67,44 @@ router.get('/img/:term', (req, res) => {
   // // paginate results 
   // client.search('Steve Angello', {page: req.offset});
   // res.send(newSearch);
+});
+
+router.get('/img/:term?offset=:paginate', (req, res) => {
+  if (Number.isInteger(req.params.paginate)) {
+    mongo.connect(uri, (err, db) => {
+    if (err) throw err;
+    
+    console.log('connected');
+    
+    var collection = db.collection('imgmodels');
+    var final = [];
+
+    customsearch.cse.list({ 
+      cx: process.env.CSEID, 
+      q: req.params.term, 
+      auth: process.env.APIKEY,
+      searchType: 'image',
+      fields: 'items(image/contextLink,link,snippet)'
+    }, (err, resp) => {
+      if (err) {
+        return console.log('An error occured', err);
+      }
+      // Got the response from custom search
+      resp.items.forEach((doc) => {
+        var dbForDoc = {
+          link : doc.link,
+          altText : doc.snippet,
+          pageUrl : doc.image.contextLink
+        };
+        final.push(dbForDoc);
+      })
+      //  still in 
+      res.send(final);
+    });
+        
+    db.close();   
+  });
+  }
 });
 
 module.exports = router

@@ -23,7 +23,7 @@ app.use('/', imgRoutes);
     
 app.use('/img/:term', imgRoutes);
 
-app.get('/img/:term/:offset?', (req, res) => {
+app.get('/img/:term?offset=:paginate', (req, res) => {
   
 });
 
