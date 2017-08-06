@@ -18,16 +18,11 @@ User Story: I can get a list of the most recently submitted search strings.
 var express = require('express'),
     mongo = require('mongodb').MongoClient,
     app = express(),
+    imgRoutes = require('imgRoutes'),
     google = require('googleapis'),
     customsearch = google.customsearch('v1');
 
 var uri = process.env.MONGODB_URI;
-
-const GoogleImages = require('google-images');
- 
-const client = new GoogleImages(process.env.CSEID, process.env.APIKEY);
- 
-// app.use(express.static('public'));
 
 app.get('/', (req, res) => {
   res.send('enter a search term in url');
