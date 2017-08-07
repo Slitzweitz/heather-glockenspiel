@@ -21,6 +21,7 @@ router.get('/', (req, res) => {
 
 router.get('/img/:term', (req, res) => {
   var paginate = req.query.offset * 10;
+  console.log(paginate);
   
   mongo.connect(uri, (err, db) => {
     if (err) throw err;
@@ -73,8 +74,6 @@ router.get('/img/:term', (req, res) => {
 
 
 module.exports = router
-
-
 
 
 // var mongoose = require('mongoose');
