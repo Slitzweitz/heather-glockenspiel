@@ -21,7 +21,6 @@ router.get('/', (req, res) => {
 
 router.get('/img/:term', (req, res) => {
   var paginate = req.query.offset * 10;
-  console.log(paginate);
   
   mongo.connect(uri, (err, db) => {
     if (err) throw err;
@@ -32,6 +31,7 @@ router.get('/img/:term', (req, res) => {
     var final = [];
     
     if (Number.isInteger(req.query.offset)) {
+      console.log(paginate);
       customsearch.cse.list({ 
       cx: process.env.CSEID, 
       q: req.params.term, 
