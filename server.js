@@ -23,10 +23,6 @@ app.use('/', imgRoutes);
     
 app.use('/img/:term', imgRoutes);
 
-app.get('/img/:term?offset=:paginate', (req, res) => {
-  
-});
-
 app.get('/img/recent/', (req, res) => {
   // search for most recent 
 });
