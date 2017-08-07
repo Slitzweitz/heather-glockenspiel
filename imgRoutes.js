@@ -55,29 +55,29 @@ router.get('/img/:term', (req, res) => {
         res.send(final);
       });
     }
-
-    customsearch.cse.list({ 
-      cx: process.env.CSEID, 
-      q: req.params.term, 
-      auth: process.env.APIKEY,
-      searchType: 'image',
-      start: paginate,
-      fields: 'items(image/contextLink,link,snippet)'
-    }, (err, resp) => {
-      if (err) {
-        return console.log('An error occured', err);
-      }
-      // Got the response from custom search
-      resp.items.forEach((doc) => {
-        var dbForDoc = {
-          link : doc.link,
-          altText : doc.snippet,
-          pageUrl : doc.image.contextLink
-        };
-        final.push(dbForDoc);
-      })   
-      res.send(final);
-    });
+    else {
+      customsearch.cse.list({ 
+        cx: process.env.CSEID, 
+        q: req.params.term, 
+        auth: process.env.APIKEY,
+        searchType: 'image',
+        fields: 'items(image/contextLink,link,snippet)'
+      }, (err, resp) => {
+        if (err) {
+          return console.log('An error occured', err);
+        }
+        // Got the response from custom search
+        resp.items.forEach((doc) => {
+          var dbForDoc = {
+            link : doc.link,
+            altText : doc.snippet,
+            pageUrl : doc.image.contextLink
+          };
+          final.push(dbForDoc);
+        })   
+        res.send(final);
+      });
+    }
       asyncInsert((data) => {
       // console.log(data);
     });
