@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 
 router.get('/img/:term', (req, res) => {
   var paginate = req.query.offset * 10;
-  console.log(paginate);
+  console.log(typeof paginate);
   
   mongo.connect(uri, (err, db) => {
     if (err) throw err;
@@ -44,6 +44,7 @@ router.get('/img/:term', (req, res) => {
           return console.log('An error occured', err);
         }
         // Got the response from custom search
+        console.log(res.length);
         resp.items.forEach((doc) => {
           var dbForDoc = {
             link : doc.link,
