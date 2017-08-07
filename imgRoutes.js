@@ -44,7 +44,7 @@ router.get('/img/:term', (req, res) => {
           return console.log('An error occured', err);
         }
         // Got the response from custom search
-        console.log(res.length);
+        console.log(resp.length);
         resp.items.forEach((doc) => {
           var dbForDoc = {
             link : doc.link,
