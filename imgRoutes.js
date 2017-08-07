@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 
 router.get('/img/:term', (req, res) => {
   var paginate = req.query.offset * 10;
-  console.log(typeof paginate);
+  console.log(paginate);
   
   mongo.connect(uri, (err, db) => {
     if (err) throw err;
