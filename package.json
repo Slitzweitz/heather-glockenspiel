@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "express": "^4.12.4",
+    "express-prettify": "0.0.8",
     "google-images": "^2.1.0",
     "googleapis": "^20.1.0",
     "mongodb": "*",

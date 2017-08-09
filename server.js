@@ -23,8 +23,6 @@ app.use('/', imgRoutes);
     
 app.use('/img/:term', imgRoutes);
 
-app.get('/img/recent/', (req, res) => {
-  // search for most recent 
-});
+app.get('/img/recent/', imgRoutes);
 
 app.listen(3000);
