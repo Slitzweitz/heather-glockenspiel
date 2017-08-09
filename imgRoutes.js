@@ -4,34 +4,59 @@ var express = require('express'),
     router = express.Router(),
     mongo = require('mongodb').MongoClient,
     google = require('googleapis'),
+    dbFind = require('./dbFind'),
     customsearch = google.customsearch('v1'),
     uri = process.env.MONGODB_URI;
 
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
-
   console.log('Time: ', Date.now())
   next()
 })
 // define the home page route
 router.get('/', (req, res) => {
-  res.send('enter a search term in url');
+  res.send({
+    'Step1': 'Enter a search term(s) in url at /img/:term <html></ br></html>',
+    'Step2': 'Optionally use ?offset=# to paginate through responses. Only 100 responses are returned, so offset=9 is maximum (for free)',
+    'Step3': 'Go to /img/recent/ to see 10 most recent queries'
+  });
 });
 // define the recent route
+
+router.get('/img/recent/', (req, res) => {
+  mongo.connect(uri, (err, db) => {
+    var collection = db.collection('imgmodels');
+  
+    dbFind.getRecent(collection, (err, doc) => {
+      if (err) {
+        res.err(err);
+      }
+      else {
+        res.send(doc);
+      }
+    });
+
+    db.close(); 
+    
+  });
+});
 
 router.get('/img/:term', (req, res) => {
   
   mongo.connect(uri, (err, db) => {
     if (err) throw err;
-    
-    console.log('connected');
-    
+    // console.log('connected');
     var collection = db.collection('imgmodels');
+    collection.insertOne({
+        term : req.params.term
+      });
+    db.close();
+  });   
+    
     var final = [];
     
     if (req.query.offset) {
-      if (req.query.offset > 10) { var paginate = req.query.offset * 10; }
-      if (req.query.offset <= 10) { var paginate = req.query.offset * 10; }      
+      var paginate = req.query.offset * 10;
       console.log(paginate);
       customsearch.cse.list({ 
       cx: process.env.CSEID, 
@@ -42,7 +67,8 @@ router.get('/img/:term', (req, res) => {
       fields: 'items(image/contextLink,link,snippet)'
       }, (err, resp) => {
         if (err) {
-          return console.log('An error occured', err);
+          console.log('An error occured, probably tried to request more than 100 results (offset=>10)', err);
+          return res.send('please do not request more than 100 results (offset=>10)'); 
         }
         // Got the response from custom search
         console.log(resp.length);
@@ -78,22 +104,8 @@ router.get('/img/:term', (req, res) => {
           final.push(dbForDoc);
         })   
         res.send(final);
-      });
-    }
-      asyncInsert((data) => {
-      // console.log(data);
-    });
-    
-    function asyncInsert(callback) {
-      collection.insertOne({
-        term : req.params.term
-      }, (err, doc) => {
-        require('assert').equal(null, err);
-        callback(doc);
-      });
-    }     
-    db.close();   
-  });
+      });    
+  };
   // // paginate results 
   // client.search('Steve Angello', {page: req.offset});
   // res.send(newSearch);
